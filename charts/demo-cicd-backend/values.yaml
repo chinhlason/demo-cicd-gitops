@@ -17,6 +17,11 @@ service:
   type: ClusterIP
   port: 8080
 
+ingress:
+  enabled: true
+  className: traefik
+  path: /
+
 resources: {}
 
 podAnnotations:
