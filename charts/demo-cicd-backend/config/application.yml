@@ -1,0 +1,9 @@
+# Non-secret Spring configuration managed in the GitOps repository.
+spring:
+  application:
+    name: democicd
+  config:
+    import: optional:file:/vault/secrets/application-secrets.yml
+app:
+  # Resolved from application-secrets.yml rendered by Vault Agent.
+  secret-message: ${app.secrets.message}

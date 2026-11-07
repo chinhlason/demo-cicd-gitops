@@ -22,8 +22,10 @@ resources: {}
 podAnnotations:
   vault.hashicorp.com/agent-inject: "true"
   vault.hashicorp.com/role: democicd-app
-  vault.hashicorp.com/agent-inject-secret-message: app-secrets/data/democicd
-  vault.hashicorp.com/agent-inject-template-message: |
+  vault.hashicorp.com/agent-inject-secret-application-secrets.yml: app-secrets/data/democicd
+  vault.hashicorp.com/agent-inject-template-application-secrets.yml: |
     {{- with secret "app-secrets/data/democicd" -}}
-    {{ .Data.data.message }}
+    app:
+      secrets:
+        message: {{ .Data.data.message | quote }}
     {{- end }}

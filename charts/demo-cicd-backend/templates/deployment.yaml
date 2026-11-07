@@ -14,10 +14,9 @@ spec:
     metadata:
       labels:
         {{- include "demo-cicd-backend.labels" . | nindent 8 }}
-      {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        checksum/application-config: {{ .Files.Get "config/application.yml" | sha256sum }}
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
     spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
       {{- with .Values.imagePullSecrets }}
@@ -28,6 +27,9 @@ spec:
         - name: app
           image: {{ if .Values.image.digest }}{{ printf "%s@%s" .Values.image.repository .Values.image.digest | quote }}{{ else }}{{ printf "%s:%s" .Values.image.repository .Values.image.tag | quote }}{{ end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: SPRING_CONFIG_ADDITIONAL_LOCATION
+              value: "optional:file:/config/"
           ports:
             - name: http
               containerPort: 8080
@@ -44,5 +46,13 @@ spec:
               port: http
             initialDelaySeconds: 30
             periodSeconds: 20
+          volumeMounts:
+            - name: application-config
+              mountPath: /config
+              readOnly: true
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: application-config
+          configMap:
+            name: {{ include "demo-cicd-backend.fullname" . }}-config
