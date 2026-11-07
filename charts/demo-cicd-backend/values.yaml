@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: sonnvt/demo-cicd-backend-app
   tag: latest
-  digest: sha256:3cfeea6b5df833c9ce2e8dd432a925bc2ae9d79830834b5ab676f2475acbf259
+  digest: sha256:1fc7e54d2b77ca61a90579ba7100e9e592c85a0283234d5bba4a41b72066bc19
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
