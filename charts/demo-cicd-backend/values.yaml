@@ -6,6 +6,9 @@ image:
   digest: sha256:e0f3eefb61ee31abc060df920aa3170b8f1fcdf02270af06e5bd20d6690d4f4b
   pullPolicy: IfNotPresent
 
+imagePullSecrets:
+  - name: dockerhub-pull
+
 serviceAccount:
   create: true
   name: democicd-app
