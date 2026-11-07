@@ -3,6 +3,7 @@ replicaCount: 1
 image:
   repository: chinhlason/demo-cicd-backend-app
   tag: latest
+  digest: sha256:e0f3eefb61ee31abc060df920aa3170b8f1fcdf02270af06e5bd20d6690d4f4b
   pullPolicy: IfNotPresent
 
 serviceAccount:
