@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository: chinhlason/demo-cicd-backend-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  create: true
+  name: democicd-app
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources: {}
