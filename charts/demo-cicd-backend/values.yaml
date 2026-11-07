@@ -26,8 +26,5 @@ podAnnotations:
   vault.hashicorp.com/agent-inject-template-application-secrets.yml: |
     {{ with secret "app-secrets/data/democicd" }}
     app:
-      secrets:
-    {{ range $key, $value := .Data.data }}
-        {{ $key | quote }}: {{ $value | toJson }}
-    {{ end }}
+      secrets: {{ .Data.data | toJSON }}
     {{ end }}
