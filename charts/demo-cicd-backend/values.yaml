@@ -24,8 +24,10 @@ podAnnotations:
   vault.hashicorp.com/role: democicd-app
   vault.hashicorp.com/agent-inject-secret-application-secrets.yml: app-secrets/data/democicd
   vault.hashicorp.com/agent-inject-template-application-secrets.yml: |
-    {{- with secret "app-secrets/data/democicd" -}}
+    {{ with secret "app-secrets/data/democicd" }}
     app:
       secrets:
-        message: {{ .Data.data.message | quote }}
-    {{- end }}
+    {{ range $key, $value := .Data.data }}
+        {{ $key | quote }}: {{ $value | toJson }}
+    {{ end }}
+    {{ end }}
